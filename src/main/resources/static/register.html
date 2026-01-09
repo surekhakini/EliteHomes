@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EliteHomes | Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background: linear-gradient(rgba(10,37,64,0.9), rgba(10,37,64,0.9)),
+                    url('https://via.placeholder.com/1600x900') center/cover;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        background: #fff;
+        width: 500px;
+        padding: 35px;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .logo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .logo img {
+        height: 45px;
+    }
+
+    .logo h2 {
+        margin: 6px 0 0;
+        color: #0A2540;
+    }
+
+    .logo span {
+        color: #C9A227;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        font-weight: 600;
+        font-size: 14px;
+        color: #0A2540;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    select {
+        background-color: #fff;
+        cursor: pointer;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 25px;
+        padding: 14px;
+        background-color: #C9A227;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    .links, .link {
+        text-align: center;
+        margin-top: 16px;
+        font-size: 14px;
+    }
+
+    .links a, .link a {
+        color: #0A2540;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .message {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+    .success { color: green; }
+    .error { color: red; }
+
+    .link {
+text-align: center;
+margin-top: 18px;
+}
+
+.link a {
+color: #0A2540;
+font-size: 14px;
+font-weight: 600;
+text-decoration: none;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.link a:hover {
+color: #C9A227;
+text-decoration: underline;
+}
+
+    .form-group {
+    width: 90%;        /* reduce width */
+    margin: auto;      /* center from both sides */
+}
+
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="logo">
+    <img src="images/home.png" alt="EliteHomes Logo">
+    <h2>Elite<span>Homes</span></h2>
+  </div>
+
+  <form id="signupForm">
+
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="signupName" required>
+    </div>
+
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="signupUsername" required>
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="signupEmail" required>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="signupPassword" required>
+    </div>
+
+    <div class="form-group">
+      <label>Role</label>
+      <select id="signupRole" required>
+        <option value="">Select Role</option>
+        <option value="buyer">Buyer</option>
+        <option value="seller">Seller</option>
+      </select>
+    </div>
+
+    <button type="submit">Create Account</button>
+  </form>
+
+
+  <div id="signupMessage" class="message"></div>
+
+  <div class="links">
+    Already have an account?
+    <a href="login.html">Login</a>
+  </div>
+
+  <div class="link">
+    <a onclick="window.location.href='home.html'">← Back to Home</a>
+  </div>
+</div>
+
+<script>
+  const signupForm = document.getElementById("signupForm");
+
+  signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const signupData = {
+          name: document.getElementById("signupName").value,
+          username: document.getElementById("signupUsername").value,
+          email: document.getElementById("signupEmail").value,
+          password: document.getElementById("signupPassword").value,
+          role: document.getElementById("signupRole").value
+      };
+
+      try {
+          const response = await fetch("http://localhost:8083/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(signupData)
+          });
+
+          const result = await response.text();
+
+          if (result === "Signup Successful") {
+              document.getElementById("signupMessage").textContent =
+                  "Account created successfully! Redirecting to login...";
+              document.getElementById("signupMessage").className =
+                  "message success";
+
+              setTimeout(() => {
+                  window.location.href = "login.html";
+              }, 1000);
+          } else {
+              document.getElementById("signupMessage").textContent = "User Already exists!";
+              document.getElementById("signupMessage").className =
+                  "message error";
+          }
+      } catch (err) {
+          document.getElementById("signupMessage").textContent =
+              "Server error. Try again.";
+          document.getElementById("signupMessage").className =
+              "message error";
+      }
+  });
+</script>
+
+</body>
+</html>

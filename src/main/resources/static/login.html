@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EliteHomes | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(rgba(10,37,64,0.9), rgba(10,37,64,0.9)),
+                        url('https://via.placeholder.com/1600x900') center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: #fff;
+            width: 380px;
+            padding: 35px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo img {
+            height: 45px;
+        }
+
+        .logo h2 {
+            margin: 8px 0 0;
+            color: #0A2540;
+        }
+
+        .logo span {
+            color: #C9A227;
+        }
+
+        label {
+            margin-top: 16px;
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0A2540;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        select {
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background-color: #C9A227;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+        }
+
+        .links a {
+            color: #0A2540;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .success { color: green; }
+        .error { color: red; }
+
+        .link {
+    text-align: center;
+    margin-top: 18px;
+}
+
+.link a {
+    color: #0A2540;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.link a:hover {
+    color: #C9A227;
+    text-decoration: underline;
+}
+
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <div class="logo">
+        <img src="images/home.png" alt="EliteHomes Logo">
+        <h2>Elite<span>Homes</span></h2>
+    </div>
+
+    <form id="loginForm">
+        <label>Username</label>
+        <input type="text" id="loginUsername" placeholder="Enter username" required>
+
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter password" required>
+
+        <label>Role</label>
+        <select id="loginRole" required>
+            <option value="">Select Role</option>
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+        </select>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div id="loginMessage" class="message"></div>
+
+    <div class="links">
+        Don’t have an account?
+        <a href="register.html">Register</a>
+    </div>
+    <div class="link">
+        <a onclick="window.location.href='index.html'">← Back to Home</a>
+    </div>
+</div>
+<script>
+    const API_URL = 'http://localhost:8083'; // backend URL
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const loginData = {
+            username: document.getElementById('loginUsername').value,
+            password: document.getElementById('loginPassword').value,
+            role: document.getElementById('loginRole').value
+        };
+
+        console.log("Sending login data:", loginData);
+
+        try {
+            const response = await fetch(`${API_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(loginData)
+            });
+
+            const text = await response.text(); // <-- use text instead of json
+            console.log("Login response from backend:", text);
+
+            // Check if response is a number → success
+            if (!isNaN(text)) {
+                const userId = text;
+                const username = loginData.username;
+                const role = loginData.role;
+
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("userId", userId);
+                localStorage.setItem("username", username);
+                localStorage.setItem("role", role);
+
+                document.getElementById('loginMessage').textContent = "Login successful!";
+                document.getElementById('loginMessage').className = "message success";
+
+                console.log("Login successful, redirecting to index.html...");
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 300);
+
+            } else {
+                // Otherwise, backend sent an error message
+                document.getElementById('loginMessage').textContent = text;
+                document.getElementById('loginMessage').className = "message error";
+            }
+
+        } catch (error) {
+            console.error("Login error:", error);
+            document.getElementById('loginMessage').textContent = "Server error. Try again.";
+            document.getElementById('loginMessage').className = "message error";
+        }
+    });
+</script>
+
+
+
+</body>
+</html>

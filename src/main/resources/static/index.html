@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EliteHomes | Find Your Perfect Property</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* ---------- Global Styles ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            color: #0A2540;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ---------- Navbar ---------- */
+        header {
+            background-color: #0A2540;
+            padding: 18px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .logo span {
+            color: #C9A227;
+        }
+
+        nav a {
+            color: #FFFFFF;
+            margin-left: 30px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #C9A227;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid #C9A227;
+            color: #C9A227;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #C9A227;
+            color: white;
+        }
+
+        /* ---------- Hero Section ---------- */
+        .hero {
+            background-color: #F5F7FA;
+            padding: 90px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hero-text {
+            max-width: 50%;
+        }
+
+        .hero-text h1 {
+            font-size: 44px;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 17px;
+            margin-bottom: 35px;
+            color: #444;
+        }
+
+        .search-box {
+            background: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .search-box input,
+        .search-box select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 180px;
+        }
+
+        .search-box button {
+            background-color: #C9A227;
+            color: #FFFFFF;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .search-box button:hover {
+            background-color: #b8951f;
+        }
+
+        /* ---------- Featured Section ---------- */
+        .section {
+            padding: 70px 80px;
+        }
+
+        .section-title {
+            font-size: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .property-card {
+            background: #FFFFFF;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .property-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .property-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .property-info {
+            padding: 20px;
+        }
+
+        .property-info h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .property-info p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-weight: 700;
+            color: #0A2540;
+        }
+
+        /* ---------- Why Choose Us ---------- */
+        .features {
+            background-color: #F5F7FA;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+
+        .feature-box {
+            padding: 30px;
+        }
+
+        .feature-box h4 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-box p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* ---------- Footer ---------- */
+        footer {
+            background-color: #0A2540;
+            color: #FFFFFF;
+            padding: 40px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<header>
+    <!-- Logo -->
+    <div style="display:flex; align-items:center; gap:10px;">
+        <img src="images/home.png" alt="EliteHomes Logo" style="height:38px; width:auto;">
+        <span style="font-size:24px; font-weight:700; color:#FFFFFF;">
+                Elite<span style="color:#C9A227;">Homes</span>
+            </span>
+    </div>
+
+    <!-- Navigation -->
+    <nav style="display:flex; align-items:center; gap:30px;">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="seller.html" id="sellerLink" style="display:none;">Sell</a>
+        <a href="login.html">Logout</a>
+    </nav>
+</header>
+
+<!-- Hero Section with Video Background -->
+<section style="position: relative; width: 100%; height: 90vh; overflow: hidden;">
+    <video autoplay muted loop playsinline style="position: absolute; top:50%; left:50%; width:110%; height:110%; object-fit: cover; transform: translate(-50%, -50%); animation: zoomEffect 18s ease-in-out infinite;">
+        <source src="video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background: rgba(10, 37, 64, 0.55); z-index:1;"></div>
+
+    <div style="position: relative; z-index:2; height:100%; display:flex; flex-direction: column; justify-content:center; align-items:center; text-align:center; color:#FFFFFF; padding:0 20px;">
+        <h1 style="font-size:48px; font-weight:700; margin-bottom:18px;">
+            Find Your Perfect Home With Confidence
+        </h1>
+        <p style="font-size:18px; max-width:700px; margin-bottom:35px; color:#F5F7FA;">
+            Discover verified properties, trusted agents, and smart tools designed to help you make the right decision.
+        </p>
+
+        <!-- Search Box -->
+        <div style="background:#FFFFFF; padding:22px; border-radius:8px; display:flex; gap:15px; box-shadow:0 12px 25px rgba(0,0,0,0.25);">
+            <div style="position:relative;">
+                <input type="text" id="cityInput" placeholder="City" onkeyup="showSuggestions()" style="padding:12px; border:1px solid #ccc; border-radius:4px; width:180px;">
+                <div id="suggestions" style="position:absolute; top:100%; left:0; width:100%; background:#FFFFFF; border:1px solid #ccc; border-top:none; max-height:150px; overflow-y:auto; display:none; z-index:999;"></div>
+            </div>
+            <select style="padding:12px; border:1px solid #ccc; border-radius:4px;">
+                <option>Buy</option>
+                <option>Rent</option>
+            </select>
+            <select style="padding:12px; border:1px solid #ccc; border-radius:4px;">
+                <option>Property Type</option>
+                <option>Apartment</option>
+                <option>Villa</option>
+            </select>
+            <button onclick="searchProperty()" style="background-color:#C9A227; color:#FFFFFF; border:none; padding:12px 22px; border-radius:4px; font-weight:600; cursor:pointer;">
+                Search
+            </button>
+        </div>
+    </div>
+
+    <style>
+        @keyframes zoomEffect {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.08); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+    </style>
+</section>
+
+<!-- Featured Properties -->
+<section class="section">
+    <h2 class="section-title">Featured Properties</h2>
+    <div class="property-grid">
+        <div class="property-card" onclick="openProperty('Bangalore','apartment','Buy','images/Casas de Luxo Minimalistas_ Quando o Menos é Mais.jpg','₹85 Lakhs','Luxury Apartment')">
+            <img src="images/Casas de Luxo Minimalistas_ Quando o Menos é Mais.jpg" alt="Property">
+            <div class="property-info">
+                <h3>Luxury Apartment</h3>
+                <p>Bangalore • 3 BHK • 1800 sqft</p>
+                <p class="price">₹85 Lakhs</p>
+            </div>
+        </div>
+        <div class="property-card" onclick="openProperty('Pune','villa','Buy','images/modern.jpg','₹1.2 Cr','Modern Villa')">
+            <img src="images/modern.jpg" alt="Property">
+            <div class="property-info">
+                <h3>Modern Villa</h3>
+                <p>Pune • 4 BHK • 2400 sqft</p>
+                <p class="price">₹1.2 Cr</p>
+            </div>
+        </div>
+        <div class="property-card" onclick="openProperty('Hyderabad','apartment','Buy','images/affordable.jpg','₹55 Lakhs','Affordable Flat')">
+            <img src="images/affordable.jpg" alt="Property">
+            <div class="property-info">
+                <h3>Affordable Flat</h3>
+                <p>Hyderabad • 2 BHK • 1200 sqft</p>
+                <p class="price">₹55 Lakhs</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="section features">
+    <div class="feature-box">
+        <h4>Verified Listings</h4>
+        <p>All properties are verified to ensure trust and transparency.</p>
+    </div>
+    <div class="feature-box">
+        <h4>Expert Agents</h4>
+        <p>Connect with experienced agents for smooth transactions.</p>
+    </div>
+    <div class="feature-box">
+        <h4>Smart Search</h4>
+        <p>Advanced filters to help you find properties faster.</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>© 2025 EliteHomes. All rights reserved.</p>
+    <p>Built with professionalism & trust.</p>
+</footer>
+<script>
+    // ------------------ CITY LIST (90+) ------------------
+    const cities = [
+        "Mumbai","Delhi","Bangalore","Hyderabad","Chennai","Kolkata",
+        "Pune","Ahmedabad","Jaipur","Chandigarh","Indore","Bhopal",
+        "Lucknow","Kanpur","Agra","Varanasi","Prayagraj","Patna",
+        "Ranchi","Jamshedpur","Dhanbad","Bhubaneswar","Cuttack",
+        "Raipur","Bilaspur","Nagpur","Amravati","Nashik","Aurangabad",
+        "Thane","Kalyan","Dombivli","Panvel","Murbad","Ulhasnagar",
+        "Mangalore","Udupi","Manipal","Hubli","Dharwad","Belgaum",
+        "Shimoga","Davangere","Chitradurga","Mysore","Mandya",
+        "Madurai","Trichy","Coimbatore","Salem","Erode","Vellore",
+        "Tirunelveli","Thoothukudi","Nagercoil","Kochi","Trivandrum",
+        "Kozhikode","Thrissur","Kannur","Palakkad","Alappuzha",
+        "Kollam","Kottayam","Vijayawada","Guntur","Vizag","Rajahmundry",
+        "Tirupati","Nellore","Kurnool","Anantapur","Kadapa",
+        "Warangal","Karimnagar","Nizamabad","Sangareddy",
+        "Noida","Greater Noida","Ghaziabad","Faridabad","Gurgaon"
+    ];
+
+    // ------------------ CITY AUTOCOMPLETE ------------------
+    function showSuggestions() {
+        const input = document.getElementById("cityInput").value.toLowerCase();
+        const suggestionBox = document.getElementById("suggestions");
+        suggestionBox.innerHTML = "";
+
+        if (input === "") {
+            suggestionBox.style.display = "none";
+            return;
+        }
+
+        const filteredCities = cities.filter(city =>
+            city.toLowerCase().startsWith(input)
+        );
+
+        if (filteredCities.length === 0) {
+            suggestionBox.style.display = "none";
+            return;
+        }
+
+        filteredCities.forEach(city => {
+            const div = document.createElement("div");
+            div.innerText = city;
+            div.style.padding = "10px";
+            div.style.cursor = "pointer";
+            div.style.color = "#0A2540";
+            div.style.backgroundColor = "#fff";
+
+            div.onmouseover = () => div.style.background = "#f1f1f1";
+            div.onmouseout = () => div.style.background = "#fff";
+
+            div.onclick = () => {
+                document.getElementById("cityInput").value = city;
+                suggestionBox.style.display = "none";
+            };
+
+            suggestionBox.appendChild(div);
+        });
+
+        suggestionBox.style.display = "block";
+    }
+
+    // ------------------ SEARCH FUNCTION ------------------
+    function searchProperty() {
+        const city = document.getElementById("cityInput").value;
+        const type = document.querySelector("select").value;
+
+        if (!city) {
+            alert("Please select a city");
+            return;
+        }
+
+        window.location.href =
+            `properties.html?city=${encodeURIComponent(city)}&type=${encodeURIComponent(type)}`;
+    }
+
+    // ------------------ FEATURED PROPERTIES CLICK ------------------
+    function openProperty(city, type, action, image, price) {
+        window.location.href =
+            `property-details.html?city=${encodeURIComponent(city)}&type=${encodeURIComponent(type)}&action=${encodeURIComponent(action)}&image=${encodeURIComponent(image)}&price=${encodeURIComponent(price)}`;
+    }
+
+    // ------------------ OPTIONAL: Example of dynamically adding featured properties ------------------
+    // const featuredContainer = document.getElementById("featuredProperties");
+    // const featuredProperties = [
+    //     { city: "Bangalore", type: "apartment", action: "Buy", image: "images/properties/house1.jpg", price: "₹75 Lakhs", title: "Bangalore Property 1" },
+    //     { city: "Mumbai", type: "apartment", action: "Buy", image: "images/properties/house2.jpg", price: "₹85 Lakhs", title: "Mumbai Property 2" }
+    // ];
+    //
+    // featuredProperties.forEach(p => {
+    //     featuredContainer.innerHTML += `
+    //     <div class="property-card" onclick="openProperty('${p.city}', '${p.type}', '${p.action}', '${p.image}', '${p.price}')">
+    //         <img src="${p.image}">
+    //         <h3>${p.title}</h3>
+    //         <p>${p.price}</p>
+    //     </div>`;
+    // });
+
+
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // -------- AUTH GUARD --------
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            console.log("Not logged in, redirecting to login.html");
+            window.location.href = "login.html";
+            return;
+        }
+
+        const authArea = document.getElementById("authArea");
+        const sellerLink = document.getElementById("sellerLink");
+
+        // Safer default values
+        const username = localStorage.getItem("username") || "User";
+        const role = localStorage.getItem("role") || "user";
+
+        // -------- SHOW USERNAME + LOGOUT BUTTON --------
+        if (authArea) {
+            authArea.innerHTML = `
+                <span style="margin-right:10px;">Hi, ${username}</span>
+                <a href="#" id="logoutBtn">Logout</a>
+            `;
+        }
+
+        // -------- ROLE-BASED LINK --------
+        if (sellerLink) {
+            sellerLink.style.display = (role === "seller") ? "inline" : "none";
+        }
+
+        // -------- LOGOUT FUNCTIONALITY --------
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", () => {
+                localStorage.clear();
+                window.location.href = "login.html";
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
